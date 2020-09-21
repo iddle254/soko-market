@@ -1,0 +1,5 @@
+.result__item:hover {
+  background-color: grey !important;
+  cursor: pointer;
+  color: whitesmoke;
+}

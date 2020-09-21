@@ -1,8 +1,8 @@
-import { observable, computed, action, runInAction } from 'mobx';
-import { IUser, IUserFormValues } from '../models/user';
-import agent from '../api/agent';
-import { RootStore } from './rootStore';
-import { history } from '../..';
+import { observable, computed, action, runInAction } from "mobx";
+import { IUser, IUserFormValues } from "../models/user";
+import agent from "../api/agent";
+import { RootStore } from "./rootStore";
+import { history } from "../..";
 
 export default class UserStore {
   rootStore: RootStore;
@@ -24,7 +24,7 @@ export default class UserStore {
       });
       this.rootStore.commonStore.setToken(user.token);
       this.rootStore.modalStore.closeModal();
-      history.push('/activities');
+      history.push("/activities");
     } catch (error) {
       throw error;
     }
@@ -33,13 +33,16 @@ export default class UserStore {
   @action register = async (values: IUserFormValues) => {
     try {
       const user = await agent.User.register(values);
+      runInAction(() => {
+        this.user = user;
+      });
       this.rootStore.commonStore.setToken(user.token);
       this.rootStore.modalStore.closeModal();
-      history.push('/activities')
+      history.push("/activities");
     } catch (error) {
       throw error;
     }
-  }
+  };
 
   @action getUser = async () => {
     try {
@@ -55,6 +58,6 @@ export default class UserStore {
   @action logout = () => {
     this.rootStore.commonStore.setToken(null);
     this.user = null;
-    history.push('/');
+    history.push("/");
   };
 }

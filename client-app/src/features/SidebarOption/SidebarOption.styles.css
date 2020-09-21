@@ -1,0 +1,28 @@
+.sidebarOption {
+  color: grey;
+  height: 40px;
+  cursor: pointer;
+  transition: 200ms color ease-in;
+  display: flex;
+  flex-direction: "row";
+  align-items: center;
+  justify-content: space-between;
+  /* padding: 19px; */
+}
+
+.sidebarOption :hover {
+  color: white;
+}
+.sidebarOption__title {
+  display: flex;
+  margin-left: 19px;
+  /* margin-bottom: 20px; */
+}
+.sidebarOption > .sidebarOption__title > h4 {
+  margin-left: 10px;
+}
+.sidebarOption > .sidebarOption__title > p {
+  margin-left: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+}

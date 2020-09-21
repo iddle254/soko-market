@@ -1,8 +1,11 @@
 export const category = [
-  { key: 'one bedroom', text: 'one bedroom', value: 'one bedroom' },
-  { key: 'two bedroom', text: 'two bedroom', value: 'two bedroom' },
-  { key: 'three bedroom', text: 'three bedroom', value: 'three bedroom' },
-  { key: 'Four bedroom', text: 'Four bedroom', value: 'Four bedroom' },
-  { key: 'five bedroom', text: 'five bedroom', value: 'five bedroom' },
-  { key: 'Bedsitter', text: 'Bedsitter', value: 'Bedsitter' }
+  { key: "groceries", text: "groceries", value: "groceries" },
+  { key: "apparel", text: "apparel", value: "apparel" },
+  { key: "rooms", text: "rooms", value: "rooms" },
+  { key: "errands", text: "errands", value: "errands" },
+  { key: "community", text: "community", value: "community" },
+  { key: "housing", text: "housing", value: "housing" },
+  { key: "photography", text: "photography", value: "photography" },
+  { key: "tickets", text: "tickets", value: "tickets" },
+  { key: "movie", text: "movie", value: "movie" },
 ];
