@@ -1,39 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { createStructuredSelector } from "reselect";
+import { selectCollectionsForPreview } from "../../app/stores/redux/shop/shop.selectors";
+
+import { fetchCollectionsStartAsync } from "../../app/stores/redux/shop/shop.actions";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import "./restaurantList.styles.css";
 
-function Movie({ searchItem, match, history }) {
-  const [initialItems, setInitialItems] = useState([]);
-  const [loading, setLoading] = useState(false);
+function AllCategoriesContainer({
+  FetchCollectionsStart,
+  allItems,
+  match,
+  history,
+}) {
+  // const [initialItems, setInitialItems] = useState([]);
+  // const [loading, setLoading] = useState(false);
 
-  const fetchMakeup = async () => {
-    setLoading(true);
-    // console.log(props.match.params.item);
-    const baseURL = "https://ali-express1.p.rapidapi.com/categories";
-    //   const searchParam = {props.match.params.item};
-    const response = await fetch(`${baseURL}`, {
-      method: "GET",
-      headers: {
-        "x-rapidapi-host": "ali-express1.p.rapidapi.com",
-        "x-rapidapi-key": "ebb8587995mshad6038ccf55c36dp16781bjsncafe61b7c13d",
-      },
-    })
-      .then(async (response) => {
-        console.log("reeeesponse>>>", response);
-        const data = await response.json();
-        console.log("daaata", data.categories);
-        setInitialItems(data.categories);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  console.log("initial<<<", initialItems);
   useEffect(() => {
-    fetchMakeup();
-  }, []);
+    FetchCollectionsStart();
+    console.log("allItems>>", allItems);
+  }, [FetchCollectionsStart]);
   return (
     <div
       className="itemSearchPage__results"
@@ -45,7 +33,7 @@ function Movie({ searchItem, match, history }) {
         justifyContent: "space-between",
       }}
     >
-      {loading ? (
+      {/* {loading ? (
         <LoadingComponent />
       ) : (
         initialItems.map((result) => (
@@ -83,9 +71,18 @@ function Movie({ searchItem, match, history }) {
             </h1>
           </div>
         ))
-      )}
+      )} */}
     </div>
   );
 }
-
-export default withRouter(Movie);
+const mapDispatchToProps = (dispatch) => ({
+  FetchCollectionsStart: () => dispatch(fetchCollectionsStartAsync()),
+});
+const mapStateToProps = createStructuredSelector({
+  allItems: selectCollectionsForPreview,
+});
+const AllCategories = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+)(AllCategoriesContainer);
+export default AllCategories;

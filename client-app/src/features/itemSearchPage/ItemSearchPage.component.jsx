@@ -3,7 +3,6 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar.component";
 import Header from "../header/Header.component";
-import Movie from "../restaurantList/Movie.component";
 import Groceries from "../restaurantList/Groceries.component";
 import Apparel from "../restaurantList/Apparel.component";
 import Photography from "../restaurantList/Photography.component";
@@ -14,6 +13,7 @@ import Housing from "../restaurantList/Housing.component";
 import Tickets from "../restaurantList/Tickets.component";
 import Makeup from "../restaurantList/Makeup.component";
 import Headphones from "../restaurantList/Headphones.component";
+import AllCategories from "../restaurantList/AllCategories.component";
 
 function ItemSearchPage(props) {
   const [locationSearched, setLocationSearched] = useState("");
@@ -60,7 +60,7 @@ function ItemSearchPage(props) {
           {props.match.params.item === "headphones" && (
             <Headphones searchItem={props.match.params.item} />
           )}
-          {props.match.params.item === "all-categories" && <Movie />}
+          {props.match.params.item === "all-categories" && <AllCategories />}
           {props.match.params.item === "fashion" && <Apparel />}
           {props.match.params.item === "photography" && <Photography />}
           {props.match.params.item === "rooms" && <Rooms />}
