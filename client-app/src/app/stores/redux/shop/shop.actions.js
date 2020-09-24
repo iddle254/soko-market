@@ -1,10 +1,20 @@
 import ShopActionTypes from "./shop.types";
 import { call, put } from "redux-saga/effects";
+import { apiCall } from "../../../api/api.js";
 
 // import {
 //   firestore,
 //   convertCollectionsSnapshotToMap
 // } from '../../firebase/firebase.utils';
+
+export const requestApiItems  = () => (dispatch)  => {
+  dispatch({
+    type: shopActionTypes.REQUEST_API_ITEMS_PENDING
+  })
+  apiCall("https://zappos-realtime-data.p.rapidapi.com/category.php")
+  .then(response => dispatch({type: shopActionTypes.REQUEST_API_ITEMS_SUCCESS, payload: response}))
+  .catch(error => dispatch({type: shopActionTypes.REQUEST_API_ITEMS_FAILED, payload: error}))
+}
 
 export const fetchCollectionsStart = () => ({
   type: ShopActionTypes.FETCH_COLLECTIONS_START,
@@ -44,6 +54,7 @@ export const fetchCollectionsStartAsync = () => {
       // yield put(fetchCollectionsFailure(e))
       console.log(e);
     }
+
 
     // .then(async (response) => {
     //       console.log("reeeesponse>>>", response);

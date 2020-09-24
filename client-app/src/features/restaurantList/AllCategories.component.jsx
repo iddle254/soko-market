@@ -5,13 +5,13 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { selectCollectionsForPreview } from "../../app/stores/redux/shop/shop.selectors";
 
-import { fetchCollectionsStartAsync } from "../../app/stores/redux/shop/shop.actions";
+import { requestApiItems } from "../../app/stores/redux/shop/shop.actions";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import "./restaurantList.styles.css";
 
 function AllCategoriesContainer({
   FetchCollectionsStart,
-  allItems,
+  apiItems,
   match,
   history,
 }) {
@@ -20,7 +20,7 @@ function AllCategoriesContainer({
 
   useEffect(() => {
     FetchCollectionsStart();
-    console.log("allItems>>", allItems);
+    console.log("apiItems>>", apiItems);
   }, [FetchCollectionsStart]);
   return (
     <div
@@ -76,11 +76,16 @@ function AllCategoriesContainer({
   );
 }
 const mapDispatchToProps = (dispatch) => ({
-  FetchCollectionsStart: () => dispatch(fetchCollectionsStartAsync()),
+  FetchCollectionsStart: () => dispatch(requestApiItems()),
 });
-const mapStateToProps = createStructuredSelector({
-  allItems: selectCollectionsForPreview,
-});
+// const mapStateToProps = createStructuredSelector({
+//   allItems: selectCollectionsForPreview,
+// });
+const mapStateToProps = (state) => {
+  return {
+    apiItems: state.shop.collections
+  }
+}
 const AllCategories = compose(
   connect(mapStateToProps, mapDispatchToProps),
   withRouter

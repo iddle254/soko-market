@@ -25,6 +25,22 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         isFetching: false,
         errorMessage: action.payload
       };
+      case ShopActionTypes.REQUEST_API_ITEMS_PENDING:
+      return {
+        ...state,
+        isFetching: true
+      };
+      case ShopActionTypes.REQUEST_API_ITEMS_SUCCESS:
+      return{
+        ...state,
+        isFetching: false,
+        collections: action.payload
+      };
+      case ShopActionTypes.REQUEST_API_ITEMS_FAILED:
+      return {
+      ...state,
+      errorMessage: action.payload
+      }
     default:
       return state;
   }
