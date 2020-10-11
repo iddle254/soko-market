@@ -14,6 +14,11 @@ import Tickets from "../restaurantList/Tickets.component";
 import Makeup from "../restaurantList/Makeup.component";
 import Headphones from "../restaurantList/Headphones.component";
 import AllCategories from "../restaurantList/AllCategories.component";
+import Bags from "../restaurantList/Bags.component";
+import Kids from "../restaurantList/Kids.component";
+import Jewelry from "../restaurantList/Jewelry.component";
+import Watches from "../restaurantList/Watches.component";
+import Clothing from "../restaurantList/Clothing.component";
 
 function ItemSearchPage(props) {
   const [locationSearched, setLocationSearched] = useState("");
@@ -62,12 +67,17 @@ function ItemSearchPage(props) {
           )}
           {props.match.params.item === "all-categories" && <AllCategories />}
           {props.match.params.item === "fashion" && <Apparel />}
-          {props.match.params.item === "photography" && <Photography />}
+          {props.match.params.item === "men" && <Photography />}
           {props.match.params.item === "rooms" && <Rooms />}
           {props.match.params.item === "errands" && <Errands />}
-          {props.match.params.item === "community" && <Community />}
+          {props.match.params.item === "sporting-goods" && <Community />}
           {props.match.params.item === "housing" && <Housing />}
-          {props.match.params.item === "tickets" && <Tickets />}
+          {props.match.params.item === "women" && <Tickets />}
+           {props.match.params.item === "bags" && <Bags />}
+            {props.match.params.item === "kids" && <Kids />}
+             {props.match.params.item === "jewelry" && <Jewelry />}
+              {props.match.params.item === "watches" && <Watches />}
+               {props.match.params.item === "clothing" && <Clothing />}
         </div>
       </div>
     </div>

@@ -1,29 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { withRouter, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { createStructuredSelector } from "reselect";
+import { selectCollectionsForPreview } from "../../app/stores/redux/shop/shop.selectors";
 
-function Photography() {
-  const [items, setItems] = useState([
-    {
-      itemName: "Full studio photoshoot",
-      itemPrice: "Kshs ...",
-      itemDescription: "CBD",
-      itemImg:
-        "https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      itemName: "Indoor photoshoot",
-      itemPrice: "Kshs ...",
-      itemDescription: "Parklands",
-      itemImg:
-        "https://images.unsplash.com/photo-1527011046414-4781f1f94f8c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      itemName: "Nature photography ",
-      itemPrice: "Kshs ...",
-      itemDescription: "Kitisuru",
-      itemImg:
-        "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    },
-  ]);
+import { requestApiItems } from "../../app/stores/redux/shop/shop.actions";
+import LoadingComponent from "../../app/layout/LoadingComponent";
+import "./restaurantList.styles.css";
+
+function Men({
+  FetchCollectionsStart,
+  apiItems,
+  loading,
+  match,
+  history,
+}) {
+  // const [initialItems, setInitialItems] = useState([]);
+  // const [loading, setLoading] = useState(false);
+console.log("apiItems>>", apiItems);
+  useEffect(() => {
+    console.log("apiItems>>", apiItems);
+  }, [apiItems]);
   return (
     <div
       className="itemSearchPage__results"
@@ -35,71 +33,62 @@ function Photography() {
         justifyContent: "space-between",
       }}
     >
-      {items.map((result) => (
-        <div
-          key={result.itemName}
-          className="result__item"
-          style={{
-            maxWidth: "30%",
-            height: "240px",
-            flex: "1 1 auto",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            justifyContent: "center",
-            border: "1px solid off-white",
-            backgroundColor: "white",
-            borderRadius: "9px",
-            overflow: "hidden",
-            marginBottom: "15px",
-          }}
-        >
+      {loading ? (
+        <LoadingComponent />
+      ) : (
+        apiItems.nodes[3].nodes.map((result) => (
           <div
+            onClick={() => history.push(`${match.url}/${result.id}`)}
+            key={result.id}
+            className="result__item"
             style={{
-              flex: 0.5,
+              maxWidth: "30%",
+              height: "120px",
+              flex: "1 1 auto",
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              justifyContent: "center",
+              border: "1px solid off-white",
+              backgroundColor: "white",
+              borderRadius: "9px",
               overflow: "hidden",
+              marginBottom: "15px",
+              marginRight: "14px",
             }}
           >
-            <img
-              className="result__itemImage"
-              src={result.itemImg}
-              alt={result.itemName}
-              style={{}}
-            ></img>
-          </div>
-
-          <div style={{ backgroundColor: "off-white", bottom: 0, flex: 0.5 }}>
-            <div
-              className="result__itemHeader"
+            <h1
               style={{
                 display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                padding: "5px",
+                flexDirection: "column",
+                flex: 1,
+                alignContent: "center",
+                justifyContent: "center",
+                padding: "15px",
               }}
             >
-              <div
-                className="result__itemName"
-                style={{ fontSize: "14px", bottom: 0 }}
-              >
-                {result.itemName}
-              </div>
-              <div className="result__itemCost" style={{ fontSize: "12px" }}>
-                {result.itemPrice}
-              </div>
-            </div>
-            <div
-              className="result__itemCost"
-              style={{ fontSize: "16px", bottom: 0, padding: "4px" }}
-            >
-              {result.itemDescription}
-            </div>
+              {result.name}
+            </h1>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 }
-
-export default Photography;
+const mapDispatchToProps = (dispatch) => ({
+  FetchCollectionsStart: () => dispatch(requestApiItems()),
+});
+// const mapStateToProps = createStructuredSelector({
+//   allItems: selectCollectionsForPreview,
+// });
+const mapStateToProps = (state) => {
+  return {
+    apiItems: state.shop.collections,
+    loading: state.shop.isFetching
+  }
+}
+const MenPage = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+)(Men);
+export default MenPage;

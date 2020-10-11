@@ -1,29 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { withRouter, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { createStructuredSelector } from "reselect";
+import { selectCollectionsForPreview } from "../../app/stores/redux/shop/shop.selectors";
 
-function Tickets() {
-  const [items, setItems] = useState([
-    {
-      itemName: "October fest",
-      itemPrice: "Kshs 2,000",
-      itemDescription: "BYOW",
-      itemImg:
-        "https://images.unsplash.com/photo-1510743006598-4845616e044f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      itemName: "Blood run",
-      itemPrice: "Kshs 1,300",
-      itemDescription: "Run to save a life",
-      itemImg:
-        "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      itemName: "Bazu live on stage",
-      itemPrice: "Kshs 2,600",
-      itemDescription: "BYOW",
-      itemImg:
-        "https://images.unsplash.com/photo-1521960965075-ba9c5e4dce2e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    },
-  ]);
+import { requestApiItems } from "../../app/stores/redux/shop/shop.actions";
+import LoadingComponent from "../../app/layout/LoadingComponent";
+import "./restaurantList.styles.css";
+
+function Women({
+  FetchCollectionsStart,
+  apiItems,
+  loading,
+  match,
+  history,
+}) {
+  // const [initialItems, setInitialItems] = useState([]);
+  // const [loading, setLoading] = useState(false);
+console.log("apiItems>>", apiItems);
+  useEffect(() => {
+    console.log("apiItems>>", apiItems);
+  }, [apiItems]);
   return (
     <div
       className="itemSearchPage__results"
@@ -35,71 +33,62 @@ function Tickets() {
         justifyContent: "space-between",
       }}
     >
-      {items.map((result) => (
-        <div
-          key={result.itemName}
-          className="result__item"
-          style={{
-            maxWidth: "30%",
-            height: "240px",
-            flex: "1 1 auto",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            justifyContent: "center",
-            border: "1px solid off-white",
-            backgroundColor: "white",
-            borderRadius: "9px",
-            overflow: "hidden",
-            marginBottom: "15px",
-          }}
-        >
+      {loading ? (
+        <LoadingComponent />
+      ) : (
+        apiItems.nodes[2].nodes.map((result) => (
           <div
+            onClick={() => history.push(`${match.url}/${result.id}`)}
+            key={result.id}
+            className="result__item"
             style={{
-              flex: 0.8,
+              maxWidth: "30%",
+              height: "120px",
+              flex: "1 1 auto",
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              justifyContent: "center",
+              border: "1px solid off-white",
+              backgroundColor: "white",
+              borderRadius: "9px",
               overflow: "hidden",
+              marginBottom: "15px",
+              marginRight: "14px",
             }}
           >
-            <img
-              className="result__itemImage"
-              src={result.itemImg}
-              alt={result.itemName}
-              style={{}}
-            ></img>
-          </div>
-
-          <div style={{ backgroundColor: "off-white", bottom: 0, flex: 0.2 }}>
-            <div
-              className="result__itemHeader"
+            <h1
               style={{
                 display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                padding: "5px",
+                flexDirection: "column",
+                flex: 1,
+                alignContent: "center",
+                justifyContent: "center",
+                padding: "15px",
               }}
             >
-              <div
-                className="result__itemName"
-                style={{ fontSize: "14px", bottom: 0 }}
-              >
-                {result.itemName}
-              </div>
-              <div className="result__itemCost" style={{ fontSize: "12px" }}>
-                {result.itemPrice}
-              </div>
-            </div>
-            <div
-              className="result__itemCost"
-              style={{ fontSize: "16px", bottom: 0, padding: "4px" }}
-            >
-              {result.itemDescription}
-            </div>
+              {result.name}
+            </h1>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 }
-
-export default Tickets;
+const mapDispatchToProps = (dispatch) => ({
+  FetchCollectionsStart: () => dispatch(requestApiItems()),
+});
+// const mapStateToProps = createStructuredSelector({
+//   allItems: selectCollectionsForPreview,
+// });
+const mapStateToProps = (state) => {
+  return {
+    apiItems: state.shop.collections,
+    loading: state.shop.isFetching
+  }
+}
+const WomenPage = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+)(Women);
+export default WomenPage;

@@ -9,11 +9,11 @@ import { apiCall } from "../../../api/api.js";
 
 export const requestApiItems  = () => (dispatch)  => {
   dispatch({
-    type: shopActionTypes.REQUEST_API_ITEMS_PENDING
+    type: ShopActionTypes.REQUEST_API_ITEMS_PENDING
   })
   apiCall("https://zappos-realtime-data.p.rapidapi.com/category.php")
-  .then(response => dispatch({type: shopActionTypes.REQUEST_API_ITEMS_SUCCESS, payload: response}))
-  .catch(error => dispatch({type: shopActionTypes.REQUEST_API_ITEMS_FAILED, payload: error}))
+  .then(response => dispatch({type: ShopActionTypes.REQUEST_API_ITEMS_SUCCESS, payload: response}))
+  .catch(error => dispatch({type: ShopActionTypes.REQUEST_API_ITEMS_FAILED, payload: error}))
 }
 
 export const fetchCollectionsStart = () => ({

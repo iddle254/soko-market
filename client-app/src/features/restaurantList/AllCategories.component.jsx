@@ -12,16 +12,16 @@ import "./restaurantList.styles.css";
 function AllCategoriesContainer({
   FetchCollectionsStart,
   apiItems,
+  loading,
   match,
   history,
 }) {
   // const [initialItems, setInitialItems] = useState([]);
   // const [loading, setLoading] = useState(false);
-
+console.log("apiItems>>", apiItems);
   useEffect(() => {
-    FetchCollectionsStart();
     console.log("apiItems>>", apiItems);
-  }, [FetchCollectionsStart]);
+  }, [apiItems]);
   return (
     <div
       className="itemSearchPage__results"
@@ -33,10 +33,10 @@ function AllCategoriesContainer({
         justifyContent: "space-between",
       }}
     >
-      {/* {loading ? (
+      {loading ? (
         <LoadingComponent />
       ) : (
-        initialItems.map((result) => (
+        apiItems.nodes.map((result) => (
           <div
             onClick={() => history.push(`${match.url}/${result.id}`)}
             key={result.id}
@@ -71,7 +71,7 @@ function AllCategoriesContainer({
             </h1>
           </div>
         ))
-      )} */}
+      )}
     </div>
   );
 }
@@ -83,7 +83,8 @@ const mapDispatchToProps = (dispatch) => ({
 // });
 const mapStateToProps = (state) => {
   return {
-    apiItems: state.shop.collections
+    apiItems: state.shop.collections,
+    loading: state.shop.isFetching
   }
 }
 const AllCategories = compose(

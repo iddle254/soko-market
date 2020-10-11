@@ -25,14 +25,14 @@ const NavBar: React.FC = () => {
             content="Post an ad"
           />
         </Menu.Item>
-        <Menu.Item>
+        {/* <Menu.Item>
           <Button
             as={NavLink}
             to="/createActivity"
             positive
             content="Create an event"
           />
-        </Menu.Item>
+        </Menu.Item> */}
         {user && (
           <Menu.Item position="right">
             <Image
