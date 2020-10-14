@@ -9,6 +9,11 @@
   margin: 0 7.5px 15px;
   overflow: hidden;
 }
+@media only screen and (max-width: 600px) {
+  .menu-item {
+    min-width: 50%;
+  }
+}
 
 .subtitle {
   font-weight: lighter;

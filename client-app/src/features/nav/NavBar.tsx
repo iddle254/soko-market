@@ -15,10 +15,10 @@ const NavBar: React.FC = () => {
           SokoMarket
         </Menu.Item>
         <Menu.Item name="Stores" as={NavLink} to="/landing" />
-        <Menu.Item name="Events" as={NavLink} to="/activities" />
+        <Menu.Item name="Advertisements" as={NavLink} to="/activities" />
         <Menu.Item>
           <Button
-            style={{ backgroundColor: "olive" }}
+            style={{ backgroundColor: "white", color:"purple" }}
             as={NavLink}
             to="/postAd"
             positive

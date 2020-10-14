@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect } from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Image } from "semantic-ui-react";
 import NavBar from "../../features/nav/NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import LandingPage from "../../features/landing/Landing.component";
@@ -28,6 +28,14 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
   const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
   const { getUser } = rootStore.userStore;
+  const leftItems = [
+    { as: "a", content: "Home", key: "home" },
+    { as: "a", content: "Users", key: "users" },
+  ];
+  const rightItems = [
+    { as: "a", content: "Login", key: "login" },
+    { as: "a", content: "Register", key: "register" },
+  ];
 
   useEffect(() => {
     if (token) {
@@ -48,6 +56,9 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         path={"/(.+)"}
         render={() => (
           <Fragment>
+            {/* <NavBar leftItems={leftItems} rightItems={rightItems}>
+              <Image src="https://react.semantic-ui.com/assets/images/wireframe/paragraph.png" />
+            </NavBar> */}
             <NavBar />
             <Container style={{ marginTop: "7em" }}>
               <Switch>

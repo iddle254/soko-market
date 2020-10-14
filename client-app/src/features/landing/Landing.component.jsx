@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import "./landing.styles.css";
+import { makeStyles } from "@material-ui/core/styles";
 
 import LandingItem from "./LandingItem.component";
 
+const useStyles = makeStyles({
+  Landing: {
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    MsOverflowStyle: "none",
+    scrollbarWidth: "none",
+  },
+});
+
 function Landing() {
+  const classes = useStyles();
   const [initialItems, setInitialItems] = useState([
     {
       item: "rooms",
@@ -78,7 +90,7 @@ function Landing() {
     },
   ]);
   return (
-    <div className="landing">
+    <div className={classes.Landing}>
       {initialItems.map((item) => (
         <LandingItem {...item} />
       ))}
