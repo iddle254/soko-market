@@ -13,17 +13,31 @@ const HomePage = () => {
   return (
     <Segment inverted textAlign="center" vertical className="masthead">
       <Container text>
-        <Header as="h1" inverted>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Image
-              size="massive"
-              src="/assets/logo.svg"
-              alt="logo"
-              style={{ marginBottom: 12 }}
-            />
-            SokoMarket
-          </div>
-        </Header>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Header as="h1" inverted>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                size="large"
+                src="/assets/logo.svg"
+                alt="logo"
+                style={{ marginBottom: 12 }}
+              />
+              SokoMarket
+            </div>
+          </Header>
+        </div>
         {isLoggedIn && user && token ? (
           <Fragment>
             <div
